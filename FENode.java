@@ -3,11 +3,9 @@ import org.apache.log4j.Logger;
 
 import org.apache.thrift.TProcessorFactory;
 import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.server.THsHaServer;
-import org.apache.thrift.transport.TServerSocket;
+import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TFramedTransport;
-
 
 public class FENode {
     static Logger log;
@@ -26,14 +24,17 @@ public class FENode {
 		log.info("Launching FE node on port " + portFE);
 
 		// launch Thrift server
-		BcryptService.Processor processor = new BcryptService.Processor<BcryptService.Iface>(new BcryptServiceHandler());
-		TServerSocket socket = new TServerSocket(portFE);
-		TSimpleServer.Args sargs = new TSimpleServer.Args(socket);
+		BcryptService.Processor processor =
+				new BcryptService.Processor<BcryptService.Iface>(new FENodeServiceHandler());
+		TNonblockingServerSocket socket = new TNonblockingServerSocket(portFE);
+		/* Use THsHaServer instead of TSimpleServer because:
+			1. we want to handle multiple connections// We also have multiple workers
+			2. We're limited on number of threads (So 1 thread per connection is not scalable) */
+		THsHaServer.Args sargs = new THsHaServer.Args(socket);
 		sargs.protocolFactory(new TBinaryProtocol.Factory());
 		sargs.transportFactory(new TFramedTransport.Factory());
 		sargs.processorFactory(new TProcessorFactory(processor));
-		// sargs.maxWorkerThreads(64);
-		TSimpleServer server = new TSimpleServer(sargs);
+		THsHaServer server = new THsHaServer(sargs);
 		server.serve();
     }
 }

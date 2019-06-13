@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
@@ -36,7 +38,11 @@ public class ClientB {
                     final BcryptService.Client client = new BcryptService.Client(clientProtocol);
                     clientTransport.open();
                     startCyclicBarrier.await();
-                    client.hashPassword(Collections.singletonList(UUID.randomUUID().toString()), (short) 10);
+                    final List<String> password = new ArrayList<>();
+                    password.add(UUID.randomUUID().toString());
+                    final List<String> hash = client.hashPassword(password, (short) 10);
+                    final List<Boolean> result = client.checkPassword(password, hash);
+                    System.out.println(result);
                     endCountDownLatch.countDown();
                     clientTransport.close();
                 } catch (Exception e) {

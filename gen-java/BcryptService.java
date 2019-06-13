@@ -13,9 +13,7 @@ public class BcryptService {
 
     public java.util.List<java.lang.Boolean> checkPassword(java.util.List<java.lang.String> password, java.util.List<java.lang.String> hash) throws IllegalArgument, org.apache.thrift.TException;
 
-    public boolean registerBE(java.lang.String hostName, short portNumber) throws IllegalArgument, org.apache.thrift.TException;
-
-    public boolean deregisterBE(java.lang.String hostName, short portNumber) throws IllegalArgument, org.apache.thrift.TException;
+    public boolean heartBeat(java.lang.String hostname, int port) throws IllegalArgument, org.apache.thrift.TException;
 
   }
 
@@ -25,9 +23,7 @@ public class BcryptService {
 
     public void checkPassword(java.util.List<java.lang.String> password, java.util.List<java.lang.String> hash, org.apache.thrift.async.AsyncMethodCallback<java.util.List<java.lang.Boolean>> resultHandler) throws org.apache.thrift.TException;
 
-    public void registerBE(java.lang.String hostName, short portNumber, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException;
-
-    public void deregisterBE(java.lang.String hostName, short portNumber, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException;
+    public void heartBeat(java.lang.String hostname, int port, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -105,58 +101,31 @@ public class BcryptService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "checkPassword failed: unknown result");
     }
 
-    public boolean registerBE(java.lang.String hostName, short portNumber) throws IllegalArgument, org.apache.thrift.TException
+    public boolean heartBeat(java.lang.String hostname, int port) throws IllegalArgument, org.apache.thrift.TException
     {
-      send_registerBE(hostName, portNumber);
-      return recv_registerBE();
+      send_heartBeat(hostname, port);
+      return recv_heartBeat();
     }
 
-    public void send_registerBE(java.lang.String hostName, short portNumber) throws org.apache.thrift.TException
+    public void send_heartBeat(java.lang.String hostname, int port) throws org.apache.thrift.TException
     {
-      registerBE_args args = new registerBE_args();
-      args.setHostName(hostName);
-      args.setPortNumber(portNumber);
-      sendBase("registerBE", args);
+      heartBeat_args args = new heartBeat_args();
+      args.setHostname(hostname);
+      args.setPort(port);
+      sendBase("heartBeat", args);
     }
 
-    public boolean recv_registerBE() throws IllegalArgument, org.apache.thrift.TException
+    public boolean recv_heartBeat() throws IllegalArgument, org.apache.thrift.TException
     {
-      registerBE_result result = new registerBE_result();
-      receiveBase(result, "registerBE");
+      heartBeat_result result = new heartBeat_result();
+      receiveBase(result, "heartBeat");
       if (result.isSetSuccess()) {
         return result.success;
       }
       if (result.e != null) {
         throw result.e;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "registerBE failed: unknown result");
-    }
-
-    public boolean deregisterBE(java.lang.String hostName, short portNumber) throws IllegalArgument, org.apache.thrift.TException
-    {
-      send_deregisterBE(hostName, portNumber);
-      return recv_deregisterBE();
-    }
-
-    public void send_deregisterBE(java.lang.String hostName, short portNumber) throws org.apache.thrift.TException
-    {
-      deregisterBE_args args = new deregisterBE_args();
-      args.setHostName(hostName);
-      args.setPortNumber(portNumber);
-      sendBase("deregisterBE", args);
-    }
-
-    public boolean recv_deregisterBE() throws IllegalArgument, org.apache.thrift.TException
-    {
-      deregisterBE_result result = new deregisterBE_result();
-      receiveBase(result, "deregisterBE");
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      if (result.e != null) {
-        throw result.e;
-      }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "deregisterBE failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "heartBeat failed: unknown result");
     }
 
   }
@@ -247,27 +216,27 @@ public class BcryptService {
       }
     }
 
-    public void registerBE(java.lang.String hostName, short portNumber, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
+    public void heartBeat(java.lang.String hostname, int port, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      registerBE_call method_call = new registerBE_call(hostName, portNumber, resultHandler, this, ___protocolFactory, ___transport);
+      heartBeat_call method_call = new heartBeat_call(hostname, port, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class registerBE_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.Boolean> {
-      private java.lang.String hostName;
-      private short portNumber;
-      public registerBE_call(java.lang.String hostName, short portNumber, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class heartBeat_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.Boolean> {
+      private java.lang.String hostname;
+      private int port;
+      public heartBeat_call(java.lang.String hostname, int port, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.hostName = hostName;
-        this.portNumber = portNumber;
+        this.hostname = hostname;
+        this.port = port;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("registerBE", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        registerBE_args args = new registerBE_args();
-        args.setHostName(hostName);
-        args.setPortNumber(portNumber);
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("heartBeat", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        heartBeat_args args = new heartBeat_args();
+        args.setHostname(hostname);
+        args.setPort(port);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -278,42 +247,7 @@ public class BcryptService {
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_registerBE();
-      }
-    }
-
-    public void deregisterBE(java.lang.String hostName, short portNumber, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
-      checkReady();
-      deregisterBE_call method_call = new deregisterBE_call(hostName, portNumber, resultHandler, this, ___protocolFactory, ___transport);
-      this.___currentMethod = method_call;
-      ___manager.call(method_call);
-    }
-
-    public static class deregisterBE_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.Boolean> {
-      private java.lang.String hostName;
-      private short portNumber;
-      public deregisterBE_call(java.lang.String hostName, short portNumber, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.hostName = hostName;
-        this.portNumber = portNumber;
-      }
-
-      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("deregisterBE", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        deregisterBE_args args = new deregisterBE_args();
-        args.setHostName(hostName);
-        args.setPortNumber(portNumber);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public java.lang.Boolean getResult() throws IllegalArgument, org.apache.thrift.TException {
-        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
-          throw new java.lang.IllegalStateException("Method call not finished!");
-        }
-        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
-        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_deregisterBE();
+        return (new Client(prot)).recv_heartBeat();
       }
     }
 
@@ -332,8 +266,7 @@ public class BcryptService {
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
       processMap.put("hashPassword", new hashPassword());
       processMap.put("checkPassword", new checkPassword());
-      processMap.put("registerBE", new registerBE());
-      processMap.put("deregisterBE", new deregisterBE());
+      processMap.put("heartBeat", new heartBeat());
       return processMap;
     }
 
@@ -395,43 +328,13 @@ public class BcryptService {
       }
     }
 
-    public static class registerBE<I extends Iface> extends org.apache.thrift.ProcessFunction<I, registerBE_args> {
-      public registerBE() {
-        super("registerBE");
+    public static class heartBeat<I extends Iface> extends org.apache.thrift.ProcessFunction<I, heartBeat_args> {
+      public heartBeat() {
+        super("heartBeat");
       }
 
-      public registerBE_args getEmptyArgsInstance() {
-        return new registerBE_args();
-      }
-
-      protected boolean isOneway() {
-        return false;
-      }
-
-      @Override
-      protected boolean rethrowUnhandledExceptions() {
-        return false;
-      }
-
-      public registerBE_result getResult(I iface, registerBE_args args) throws org.apache.thrift.TException {
-        registerBE_result result = new registerBE_result();
-        try {
-          result.success = iface.registerBE(args.hostName, args.portNumber);
-          result.setSuccessIsSet(true);
-        } catch (IllegalArgument e) {
-          result.e = e;
-        }
-        return result;
-      }
-    }
-
-    public static class deregisterBE<I extends Iface> extends org.apache.thrift.ProcessFunction<I, deregisterBE_args> {
-      public deregisterBE() {
-        super("deregisterBE");
-      }
-
-      public deregisterBE_args getEmptyArgsInstance() {
-        return new deregisterBE_args();
+      public heartBeat_args getEmptyArgsInstance() {
+        return new heartBeat_args();
       }
 
       protected boolean isOneway() {
@@ -443,10 +346,10 @@ public class BcryptService {
         return false;
       }
 
-      public deregisterBE_result getResult(I iface, deregisterBE_args args) throws org.apache.thrift.TException {
-        deregisterBE_result result = new deregisterBE_result();
+      public heartBeat_result getResult(I iface, heartBeat_args args) throws org.apache.thrift.TException {
+        heartBeat_result result = new heartBeat_result();
         try {
-          result.success = iface.deregisterBE(args.hostName, args.portNumber);
+          result.success = iface.heartBeat(args.hostname, args.port);
           result.setSuccessIsSet(true);
         } catch (IllegalArgument e) {
           result.e = e;
@@ -470,8 +373,7 @@ public class BcryptService {
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
       processMap.put("hashPassword", new hashPassword());
       processMap.put("checkPassword", new checkPassword());
-      processMap.put("registerBE", new registerBE());
-      processMap.put("deregisterBE", new deregisterBE());
+      processMap.put("heartBeat", new heartBeat());
       return processMap;
     }
 
@@ -605,20 +507,20 @@ public class BcryptService {
       }
     }
 
-    public static class registerBE<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, registerBE_args, java.lang.Boolean> {
-      public registerBE() {
-        super("registerBE");
+    public static class heartBeat<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, heartBeat_args, java.lang.Boolean> {
+      public heartBeat() {
+        super("heartBeat");
       }
 
-      public registerBE_args getEmptyArgsInstance() {
-        return new registerBE_args();
+      public heartBeat_args getEmptyArgsInstance() {
+        return new heartBeat_args();
       }
 
       public org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
         return new org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean>() { 
           public void onComplete(java.lang.Boolean o) {
-            registerBE_result result = new registerBE_result();
+            heartBeat_result result = new heartBeat_result();
             result.success = o;
             result.setSuccessIsSet(true);
             try {
@@ -634,7 +536,7 @@ public class BcryptService {
           public void onError(java.lang.Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
-            registerBE_result result = new registerBE_result();
+            heartBeat_result result = new heartBeat_result();
             if (e instanceof IllegalArgument) {
               result.e = (IllegalArgument) e;
               result.setEIsSet(true);
@@ -666,74 +568,8 @@ public class BcryptService {
         return false;
       }
 
-      public void start(I iface, registerBE_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
-        iface.registerBE(args.hostName, args.portNumber,resultHandler);
-      }
-    }
-
-    public static class deregisterBE<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, deregisterBE_args, java.lang.Boolean> {
-      public deregisterBE() {
-        super("deregisterBE");
-      }
-
-      public deregisterBE_args getEmptyArgsInstance() {
-        return new deregisterBE_args();
-      }
-
-      public org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
-        final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean>() { 
-          public void onComplete(java.lang.Boolean o) {
-            deregisterBE_result result = new deregisterBE_result();
-            result.success = o;
-            result.setSuccessIsSet(true);
-            try {
-              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
-            } catch (org.apache.thrift.transport.TTransportException e) {
-              _LOGGER.error("TTransportException writing to internal frame buffer", e);
-              fb.close();
-            } catch (java.lang.Exception e) {
-              _LOGGER.error("Exception writing to internal frame buffer", e);
-              onError(e);
-            }
-          }
-          public void onError(java.lang.Exception e) {
-            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
-            org.apache.thrift.TSerializable msg;
-            deregisterBE_result result = new deregisterBE_result();
-            if (e instanceof IllegalArgument) {
-              result.e = (IllegalArgument) e;
-              result.setEIsSet(true);
-              msg = result;
-            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
-              _LOGGER.error("TTransportException inside handler", e);
-              fb.close();
-              return;
-            } else if (e instanceof org.apache.thrift.TApplicationException) {
-              _LOGGER.error("TApplicationException inside handler", e);
-              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
-              msg = (org.apache.thrift.TApplicationException)e;
-            } else {
-              _LOGGER.error("Exception inside handler", e);
-              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
-              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
-            }
-            try {
-              fcall.sendResponse(fb,msg,msgType,seqid);
-            } catch (java.lang.Exception ex) {
-              _LOGGER.error("Exception writing to internal frame buffer", ex);
-              fb.close();
-            }
-          }
-        };
-      }
-
-      protected boolean isOneway() {
-        return false;
-      }
-
-      public void start(I iface, deregisterBE_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
-        iface.deregisterBE(args.hostName, args.portNumber,resultHandler);
+      public void start(I iface, heartBeat_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException {
+        iface.heartBeat(args.hostname, args.port,resultHandler);
       }
     }
 
@@ -2876,22 +2712,22 @@ public class BcryptService {
     }
   }
 
-  public static class registerBE_args implements org.apache.thrift.TBase<registerBE_args, registerBE_args._Fields>, java.io.Serializable, Cloneable, Comparable<registerBE_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("registerBE_args");
+  public static class heartBeat_args implements org.apache.thrift.TBase<heartBeat_args, heartBeat_args._Fields>, java.io.Serializable, Cloneable, Comparable<heartBeat_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("heartBeat_args");
 
-    private static final org.apache.thrift.protocol.TField HOST_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("hostName", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField PORT_NUMBER_FIELD_DESC = new org.apache.thrift.protocol.TField("portNumber", org.apache.thrift.protocol.TType.I16, (short)2);
+    private static final org.apache.thrift.protocol.TField HOSTNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("hostname", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField PORT_FIELD_DESC = new org.apache.thrift.protocol.TField("port", org.apache.thrift.protocol.TType.I32, (short)2);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new registerBE_argsStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new registerBE_argsTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new heartBeat_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new heartBeat_argsTupleSchemeFactory();
 
-    public @org.apache.thrift.annotation.Nullable java.lang.String hostName; // required
-    public short portNumber; // required
+    public @org.apache.thrift.annotation.Nullable java.lang.String hostname; // required
+    public int port; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      HOST_NAME((short)1, "hostName"),
-      PORT_NUMBER((short)2, "portNumber");
+      HOSTNAME((short)1, "hostname"),
+      PORT((short)2, "port");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2907,10 +2743,10 @@ public class BcryptService {
       @org.apache.thrift.annotation.Nullable
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // HOST_NAME
-            return HOST_NAME;
-          case 2: // PORT_NUMBER
-            return PORT_NUMBER;
+          case 1: // HOSTNAME
+            return HOSTNAME;
+          case 2: // PORT
+            return PORT;
           default:
             return null;
         }
@@ -2952,117 +2788,117 @@ public class BcryptService {
     }
 
     // isset id assignments
-    private static final int __PORTNUMBER_ISSET_ID = 0;
+    private static final int __PORT_ISSET_ID = 0;
     private byte __isset_bitfield = 0;
     public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.HOST_NAME, new org.apache.thrift.meta_data.FieldMetaData("hostName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.HOSTNAME, new org.apache.thrift.meta_data.FieldMetaData("hostname", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.PORT_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("portNumber", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16)));
+      tmpMap.put(_Fields.PORT, new org.apache.thrift.meta_data.FieldMetaData("port", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(registerBE_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(heartBeat_args.class, metaDataMap);
     }
 
-    public registerBE_args() {
+    public heartBeat_args() {
     }
 
-    public registerBE_args(
-      java.lang.String hostName,
-      short portNumber)
+    public heartBeat_args(
+      java.lang.String hostname,
+      int port)
     {
       this();
-      this.hostName = hostName;
-      this.portNumber = portNumber;
-      setPortNumberIsSet(true);
+      this.hostname = hostname;
+      this.port = port;
+      setPortIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public registerBE_args(registerBE_args other) {
+    public heartBeat_args(heartBeat_args other) {
       __isset_bitfield = other.__isset_bitfield;
-      if (other.isSetHostName()) {
-        this.hostName = other.hostName;
+      if (other.isSetHostname()) {
+        this.hostname = other.hostname;
       }
-      this.portNumber = other.portNumber;
+      this.port = other.port;
     }
 
-    public registerBE_args deepCopy() {
-      return new registerBE_args(this);
+    public heartBeat_args deepCopy() {
+      return new heartBeat_args(this);
     }
 
     @Override
     public void clear() {
-      this.hostName = null;
-      setPortNumberIsSet(false);
-      this.portNumber = 0;
+      this.hostname = null;
+      setPortIsSet(false);
+      this.port = 0;
     }
 
     @org.apache.thrift.annotation.Nullable
-    public java.lang.String getHostName() {
-      return this.hostName;
+    public java.lang.String getHostname() {
+      return this.hostname;
     }
 
-    public registerBE_args setHostName(@org.apache.thrift.annotation.Nullable java.lang.String hostName) {
-      this.hostName = hostName;
+    public heartBeat_args setHostname(@org.apache.thrift.annotation.Nullable java.lang.String hostname) {
+      this.hostname = hostname;
       return this;
     }
 
-    public void unsetHostName() {
-      this.hostName = null;
+    public void unsetHostname() {
+      this.hostname = null;
     }
 
-    /** Returns true if field hostName is set (has been assigned a value) and false otherwise */
-    public boolean isSetHostName() {
-      return this.hostName != null;
+    /** Returns true if field hostname is set (has been assigned a value) and false otherwise */
+    public boolean isSetHostname() {
+      return this.hostname != null;
     }
 
-    public void setHostNameIsSet(boolean value) {
+    public void setHostnameIsSet(boolean value) {
       if (!value) {
-        this.hostName = null;
+        this.hostname = null;
       }
     }
 
-    public short getPortNumber() {
-      return this.portNumber;
+    public int getPort() {
+      return this.port;
     }
 
-    public registerBE_args setPortNumber(short portNumber) {
-      this.portNumber = portNumber;
-      setPortNumberIsSet(true);
+    public heartBeat_args setPort(int port) {
+      this.port = port;
+      setPortIsSet(true);
       return this;
     }
 
-    public void unsetPortNumber() {
-      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __PORTNUMBER_ISSET_ID);
+    public void unsetPort() {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __PORT_ISSET_ID);
     }
 
-    /** Returns true if field portNumber is set (has been assigned a value) and false otherwise */
-    public boolean isSetPortNumber() {
-      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __PORTNUMBER_ISSET_ID);
+    /** Returns true if field port is set (has been assigned a value) and false otherwise */
+    public boolean isSetPort() {
+      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __PORT_ISSET_ID);
     }
 
-    public void setPortNumberIsSet(boolean value) {
-      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PORTNUMBER_ISSET_ID, value);
+    public void setPortIsSet(boolean value) {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PORT_ISSET_ID, value);
     }
 
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
-      case HOST_NAME:
+      case HOSTNAME:
         if (value == null) {
-          unsetHostName();
+          unsetHostname();
         } else {
-          setHostName((java.lang.String)value);
+          setHostname((java.lang.String)value);
         }
         break;
 
-      case PORT_NUMBER:
+      case PORT:
         if (value == null) {
-          unsetPortNumber();
+          unsetPort();
         } else {
-          setPortNumber((java.lang.Short)value);
+          setPort((java.lang.Integer)value);
         }
         break;
 
@@ -3072,11 +2908,11 @@ public class BcryptService {
     @org.apache.thrift.annotation.Nullable
     public java.lang.Object getFieldValue(_Fields field) {
       switch (field) {
-      case HOST_NAME:
-        return getHostName();
+      case HOSTNAME:
+        return getHostname();
 
-      case PORT_NUMBER:
-        return getPortNumber();
+      case PORT:
+        return getPort();
 
       }
       throw new java.lang.IllegalStateException();
@@ -3089,10 +2925,10 @@ public class BcryptService {
       }
 
       switch (field) {
-      case HOST_NAME:
-        return isSetHostName();
-      case PORT_NUMBER:
-        return isSetPortNumber();
+      case HOSTNAME:
+        return isSetHostname();
+      case PORT:
+        return isSetPort();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -3101,32 +2937,32 @@ public class BcryptService {
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof registerBE_args)
-        return this.equals((registerBE_args)that);
+      if (that instanceof heartBeat_args)
+        return this.equals((heartBeat_args)that);
       return false;
     }
 
-    public boolean equals(registerBE_args that) {
+    public boolean equals(heartBeat_args that) {
       if (that == null)
         return false;
       if (this == that)
         return true;
 
-      boolean this_present_hostName = true && this.isSetHostName();
-      boolean that_present_hostName = true && that.isSetHostName();
-      if (this_present_hostName || that_present_hostName) {
-        if (!(this_present_hostName && that_present_hostName))
+      boolean this_present_hostname = true && this.isSetHostname();
+      boolean that_present_hostname = true && that.isSetHostname();
+      if (this_present_hostname || that_present_hostname) {
+        if (!(this_present_hostname && that_present_hostname))
           return false;
-        if (!this.hostName.equals(that.hostName))
+        if (!this.hostname.equals(that.hostname))
           return false;
       }
 
-      boolean this_present_portNumber = true;
-      boolean that_present_portNumber = true;
-      if (this_present_portNumber || that_present_portNumber) {
-        if (!(this_present_portNumber && that_present_portNumber))
+      boolean this_present_port = true;
+      boolean that_present_port = true;
+      if (this_present_port || that_present_port) {
+        if (!(this_present_port && that_present_port))
           return false;
-        if (this.portNumber != that.portNumber)
+        if (this.port != that.port)
           return false;
       }
 
@@ -3137,39 +2973,39 @@ public class BcryptService {
     public int hashCode() {
       int hashCode = 1;
 
-      hashCode = hashCode * 8191 + ((isSetHostName()) ? 131071 : 524287);
-      if (isSetHostName())
-        hashCode = hashCode * 8191 + hostName.hashCode();
+      hashCode = hashCode * 8191 + ((isSetHostname()) ? 131071 : 524287);
+      if (isSetHostname())
+        hashCode = hashCode * 8191 + hostname.hashCode();
 
-      hashCode = hashCode * 8191 + portNumber;
+      hashCode = hashCode * 8191 + port;
 
       return hashCode;
     }
 
     @Override
-    public int compareTo(registerBE_args other) {
+    public int compareTo(heartBeat_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
 
-      lastComparison = java.lang.Boolean.valueOf(isSetHostName()).compareTo(other.isSetHostName());
+      lastComparison = java.lang.Boolean.valueOf(isSetHostname()).compareTo(other.isSetHostname());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetHostName()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.hostName, other.hostName);
+      if (isSetHostname()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.hostname, other.hostname);
         if (lastComparison != 0) {
           return lastComparison;
         }
       }
-      lastComparison = java.lang.Boolean.valueOf(isSetPortNumber()).compareTo(other.isSetPortNumber());
+      lastComparison = java.lang.Boolean.valueOf(isSetPort()).compareTo(other.isSetPort());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetPortNumber()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.portNumber, other.portNumber);
+      if (isSetPort()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.port, other.port);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3192,19 +3028,19 @@ public class BcryptService {
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("registerBE_args(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("heartBeat_args(");
       boolean first = true;
 
-      sb.append("hostName:");
-      if (this.hostName == null) {
+      sb.append("hostname:");
+      if (this.hostname == null) {
         sb.append("null");
       } else {
-        sb.append(this.hostName);
+        sb.append(this.hostname);
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("portNumber:");
-      sb.append(this.portNumber);
+      sb.append("port:");
+      sb.append(this.port);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -3233,15 +3069,15 @@ public class BcryptService {
       }
     }
 
-    private static class registerBE_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public registerBE_argsStandardScheme getScheme() {
-        return new registerBE_argsStandardScheme();
+    private static class heartBeat_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public heartBeat_argsStandardScheme getScheme() {
+        return new heartBeat_argsStandardScheme();
       }
     }
 
-    private static class registerBE_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<registerBE_args> {
+    private static class heartBeat_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<heartBeat_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, registerBE_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, heartBeat_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -3251,18 +3087,18 @@ public class BcryptService {
             break;
           }
           switch (schemeField.id) {
-            case 1: // HOST_NAME
+            case 1: // HOSTNAME
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.hostName = iprot.readString();
-                struct.setHostNameIsSet(true);
+                struct.hostname = iprot.readString();
+                struct.setHostnameIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // PORT_NUMBER
-              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
-                struct.portNumber = iprot.readI16();
-                struct.setPortNumberIsSet(true);
+            case 2: // PORT
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.port = iprot.readI32();
+                struct.setPortIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -3278,17 +3114,17 @@ public class BcryptService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, registerBE_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, heartBeat_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.hostName != null) {
-          oprot.writeFieldBegin(HOST_NAME_FIELD_DESC);
-          oprot.writeString(struct.hostName);
+        if (struct.hostname != null) {
+          oprot.writeFieldBegin(HOSTNAME_FIELD_DESC);
+          oprot.writeString(struct.hostname);
           oprot.writeFieldEnd();
         }
-        oprot.writeFieldBegin(PORT_NUMBER_FIELD_DESC);
-        oprot.writeI16(struct.portNumber);
+        oprot.writeFieldBegin(PORT_FIELD_DESC);
+        oprot.writeI32(struct.port);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -3296,44 +3132,44 @@ public class BcryptService {
 
     }
 
-    private static class registerBE_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public registerBE_argsTupleScheme getScheme() {
-        return new registerBE_argsTupleScheme();
+    private static class heartBeat_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public heartBeat_argsTupleScheme getScheme() {
+        return new heartBeat_argsTupleScheme();
       }
     }
 
-    private static class registerBE_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<registerBE_args> {
+    private static class heartBeat_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<heartBeat_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, registerBE_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, heartBeat_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetHostName()) {
+        if (struct.isSetHostname()) {
           optionals.set(0);
         }
-        if (struct.isSetPortNumber()) {
+        if (struct.isSetPort()) {
           optionals.set(1);
         }
         oprot.writeBitSet(optionals, 2);
-        if (struct.isSetHostName()) {
-          oprot.writeString(struct.hostName);
+        if (struct.isSetHostname()) {
+          oprot.writeString(struct.hostname);
         }
-        if (struct.isSetPortNumber()) {
-          oprot.writeI16(struct.portNumber);
+        if (struct.isSetPort()) {
+          oprot.writeI32(struct.port);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, registerBE_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, heartBeat_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.hostName = iprot.readString();
-          struct.setHostNameIsSet(true);
+          struct.hostname = iprot.readString();
+          struct.setHostnameIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.portNumber = iprot.readI16();
-          struct.setPortNumberIsSet(true);
+          struct.port = iprot.readI32();
+          struct.setPortIsSet(true);
         }
       }
     }
@@ -3343,14 +3179,14 @@ public class BcryptService {
     }
   }
 
-  public static class registerBE_result implements org.apache.thrift.TBase<registerBE_result, registerBE_result._Fields>, java.io.Serializable, Cloneable, Comparable<registerBE_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("registerBE_result");
+  public static class heartBeat_result implements org.apache.thrift.TBase<heartBeat_result, heartBeat_result._Fields>, java.io.Serializable, Cloneable, Comparable<heartBeat_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("heartBeat_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.BOOL, (short)0);
     private static final org.apache.thrift.protocol.TField E_FIELD_DESC = new org.apache.thrift.protocol.TField("e", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new registerBE_resultStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new registerBE_resultTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new heartBeat_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new heartBeat_resultTupleSchemeFactory();
 
     public boolean success; // required
     public @org.apache.thrift.annotation.Nullable IllegalArgument e; // required
@@ -3429,13 +3265,13 @@ public class BcryptService {
       tmpMap.put(_Fields.E, new org.apache.thrift.meta_data.FieldMetaData("e", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, IllegalArgument.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(registerBE_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(heartBeat_result.class, metaDataMap);
     }
 
-    public registerBE_result() {
+    public heartBeat_result() {
     }
 
-    public registerBE_result(
+    public heartBeat_result(
       boolean success,
       IllegalArgument e)
     {
@@ -3448,7 +3284,7 @@ public class BcryptService {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public registerBE_result(registerBE_result other) {
+    public heartBeat_result(heartBeat_result other) {
       __isset_bitfield = other.__isset_bitfield;
       this.success = other.success;
       if (other.isSetE()) {
@@ -3456,8 +3292,8 @@ public class BcryptService {
       }
     }
 
-    public registerBE_result deepCopy() {
-      return new registerBE_result(this);
+    public heartBeat_result deepCopy() {
+      return new heartBeat_result(this);
     }
 
     @Override
@@ -3471,7 +3307,7 @@ public class BcryptService {
       return this.success;
     }
 
-    public registerBE_result setSuccess(boolean success) {
+    public heartBeat_result setSuccess(boolean success) {
       this.success = success;
       setSuccessIsSet(true);
       return this;
@@ -3495,7 +3331,7 @@ public class BcryptService {
       return this.e;
     }
 
-    public registerBE_result setE(@org.apache.thrift.annotation.Nullable IllegalArgument e) {
+    public heartBeat_result setE(@org.apache.thrift.annotation.Nullable IllegalArgument e) {
       this.e = e;
       return this;
     }
@@ -3568,12 +3404,12 @@ public class BcryptService {
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof registerBE_result)
-        return this.equals((registerBE_result)that);
+      if (that instanceof heartBeat_result)
+        return this.equals((heartBeat_result)that);
       return false;
     }
 
-    public boolean equals(registerBE_result that) {
+    public boolean equals(heartBeat_result that) {
       if (that == null)
         return false;
       if (this == that)
@@ -3614,7 +3450,7 @@ public class BcryptService {
     }
 
     @Override
-    public int compareTo(registerBE_result other) {
+    public int compareTo(heartBeat_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -3659,7 +3495,7 @@ public class BcryptService {
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("registerBE_result(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("heartBeat_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -3700,15 +3536,15 @@ public class BcryptService {
       }
     }
 
-    private static class registerBE_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public registerBE_resultStandardScheme getScheme() {
-        return new registerBE_resultStandardScheme();
+    private static class heartBeat_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public heartBeat_resultStandardScheme getScheme() {
+        return new heartBeat_resultStandardScheme();
       }
     }
 
-    private static class registerBE_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<registerBE_result> {
+    private static class heartBeat_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<heartBeat_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, registerBE_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, heartBeat_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -3746,7 +3582,7 @@ public class BcryptService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, registerBE_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, heartBeat_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -3766,16 +3602,16 @@ public class BcryptService {
 
     }
 
-    private static class registerBE_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public registerBE_resultTupleScheme getScheme() {
-        return new registerBE_resultTupleScheme();
+    private static class heartBeat_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public heartBeat_resultTupleScheme getScheme() {
+        return new heartBeat_resultTupleScheme();
       }
     }
 
-    private static class registerBE_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<registerBE_result> {
+    private static class heartBeat_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<heartBeat_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, registerBE_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, heartBeat_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetSuccess()) {
@@ -3794,945 +3630,7 @@ public class BcryptService {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, registerBE_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
-        if (incoming.get(0)) {
-          struct.success = iprot.readBool();
-          struct.setSuccessIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.e = new IllegalArgument();
-          struct.e.read(iprot);
-          struct.setEIsSet(true);
-        }
-      }
-    }
-
-    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
-      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
-    }
-  }
-
-  public static class deregisterBE_args implements org.apache.thrift.TBase<deregisterBE_args, deregisterBE_args._Fields>, java.io.Serializable, Cloneable, Comparable<deregisterBE_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("deregisterBE_args");
-
-    private static final org.apache.thrift.protocol.TField HOST_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("hostName", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField PORT_NUMBER_FIELD_DESC = new org.apache.thrift.protocol.TField("portNumber", org.apache.thrift.protocol.TType.I16, (short)2);
-
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new deregisterBE_argsStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new deregisterBE_argsTupleSchemeFactory();
-
-    public @org.apache.thrift.annotation.Nullable java.lang.String hostName; // required
-    public short portNumber; // required
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      HOST_NAME((short)1, "hostName"),
-      PORT_NUMBER((short)2, "portNumber");
-
-      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
-
-      static {
-        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      @org.apache.thrift.annotation.Nullable
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // HOST_NAME
-            return HOST_NAME;
-          case 2: // PORT_NUMBER
-            return PORT_NUMBER;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      @org.apache.thrift.annotation.Nullable
-      public static _Fields findByName(java.lang.String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final java.lang.String _fieldName;
-
-      _Fields(short thriftId, java.lang.String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public java.lang.String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    private static final int __PORTNUMBER_ISSET_ID = 0;
-    private byte __isset_bitfield = 0;
-    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.HOST_NAME, new org.apache.thrift.meta_data.FieldMetaData("hostName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.PORT_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("portNumber", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16)));
-      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(deregisterBE_args.class, metaDataMap);
-    }
-
-    public deregisterBE_args() {
-    }
-
-    public deregisterBE_args(
-      java.lang.String hostName,
-      short portNumber)
-    {
-      this();
-      this.hostName = hostName;
-      this.portNumber = portNumber;
-      setPortNumberIsSet(true);
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public deregisterBE_args(deregisterBE_args other) {
-      __isset_bitfield = other.__isset_bitfield;
-      if (other.isSetHostName()) {
-        this.hostName = other.hostName;
-      }
-      this.portNumber = other.portNumber;
-    }
-
-    public deregisterBE_args deepCopy() {
-      return new deregisterBE_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.hostName = null;
-      setPortNumberIsSet(false);
-      this.portNumber = 0;
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public java.lang.String getHostName() {
-      return this.hostName;
-    }
-
-    public deregisterBE_args setHostName(@org.apache.thrift.annotation.Nullable java.lang.String hostName) {
-      this.hostName = hostName;
-      return this;
-    }
-
-    public void unsetHostName() {
-      this.hostName = null;
-    }
-
-    /** Returns true if field hostName is set (has been assigned a value) and false otherwise */
-    public boolean isSetHostName() {
-      return this.hostName != null;
-    }
-
-    public void setHostNameIsSet(boolean value) {
-      if (!value) {
-        this.hostName = null;
-      }
-    }
-
-    public short getPortNumber() {
-      return this.portNumber;
-    }
-
-    public deregisterBE_args setPortNumber(short portNumber) {
-      this.portNumber = portNumber;
-      setPortNumberIsSet(true);
-      return this;
-    }
-
-    public void unsetPortNumber() {
-      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __PORTNUMBER_ISSET_ID);
-    }
-
-    /** Returns true if field portNumber is set (has been assigned a value) and false otherwise */
-    public boolean isSetPortNumber() {
-      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __PORTNUMBER_ISSET_ID);
-    }
-
-    public void setPortNumberIsSet(boolean value) {
-      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PORTNUMBER_ISSET_ID, value);
-    }
-
-    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
-      switch (field) {
-      case HOST_NAME:
-        if (value == null) {
-          unsetHostName();
-        } else {
-          setHostName((java.lang.String)value);
-        }
-        break;
-
-      case PORT_NUMBER:
-        if (value == null) {
-          unsetPortNumber();
-        } else {
-          setPortNumber((java.lang.Short)value);
-        }
-        break;
-
-      }
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public java.lang.Object getFieldValue(_Fields field) {
-      switch (field) {
-      case HOST_NAME:
-        return getHostName();
-
-      case PORT_NUMBER:
-        return getPortNumber();
-
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new java.lang.IllegalArgumentException();
-      }
-
-      switch (field) {
-      case HOST_NAME:
-        return isSetHostName();
-      case PORT_NUMBER:
-        return isSetPortNumber();
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(java.lang.Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof deregisterBE_args)
-        return this.equals((deregisterBE_args)that);
-      return false;
-    }
-
-    public boolean equals(deregisterBE_args that) {
-      if (that == null)
-        return false;
-      if (this == that)
-        return true;
-
-      boolean this_present_hostName = true && this.isSetHostName();
-      boolean that_present_hostName = true && that.isSetHostName();
-      if (this_present_hostName || that_present_hostName) {
-        if (!(this_present_hostName && that_present_hostName))
-          return false;
-        if (!this.hostName.equals(that.hostName))
-          return false;
-      }
-
-      boolean this_present_portNumber = true;
-      boolean that_present_portNumber = true;
-      if (this_present_portNumber || that_present_portNumber) {
-        if (!(this_present_portNumber && that_present_portNumber))
-          return false;
-        if (this.portNumber != that.portNumber)
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      int hashCode = 1;
-
-      hashCode = hashCode * 8191 + ((isSetHostName()) ? 131071 : 524287);
-      if (isSetHostName())
-        hashCode = hashCode * 8191 + hostName.hashCode();
-
-      hashCode = hashCode * 8191 + portNumber;
-
-      return hashCode;
-    }
-
-    @Override
-    public int compareTo(deregisterBE_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-
-      lastComparison = java.lang.Boolean.valueOf(isSetHostName()).compareTo(other.isSetHostName());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetHostName()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.hostName, other.hostName);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.valueOf(isSetPortNumber()).compareTo(other.isSetPortNumber());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetPortNumber()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.portNumber, other.portNumber);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      scheme(iprot).read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      scheme(oprot).write(oprot, this);
-    }
-
-    @Override
-    public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("deregisterBE_args(");
-      boolean first = true;
-
-      sb.append("hostName:");
-      if (this.hostName == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.hostName);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("portNumber:");
-      sb.append(this.portNumber);
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
-      try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
-        __isset_bitfield = 0;
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class deregisterBE_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public deregisterBE_argsStandardScheme getScheme() {
-        return new deregisterBE_argsStandardScheme();
-      }
-    }
-
-    private static class deregisterBE_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<deregisterBE_args> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, deregisterBE_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            case 1: // HOST_NAME
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.hostName = iprot.readString();
-                struct.setHostNameIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 2: // PORT_NUMBER
-              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
-                struct.portNumber = iprot.readI16();
-                struct.setPortNumberIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, deregisterBE_args struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.hostName != null) {
-          oprot.writeFieldBegin(HOST_NAME_FIELD_DESC);
-          oprot.writeString(struct.hostName);
-          oprot.writeFieldEnd();
-        }
-        oprot.writeFieldBegin(PORT_NUMBER_FIELD_DESC);
-        oprot.writeI16(struct.portNumber);
-        oprot.writeFieldEnd();
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class deregisterBE_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public deregisterBE_argsTupleScheme getScheme() {
-        return new deregisterBE_argsTupleScheme();
-      }
-    }
-
-    private static class deregisterBE_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<deregisterBE_args> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, deregisterBE_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetHostName()) {
-          optionals.set(0);
-        }
-        if (struct.isSetPortNumber()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
-        if (struct.isSetHostName()) {
-          oprot.writeString(struct.hostName);
-        }
-        if (struct.isSetPortNumber()) {
-          oprot.writeI16(struct.portNumber);
-        }
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, deregisterBE_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
-        if (incoming.get(0)) {
-          struct.hostName = iprot.readString();
-          struct.setHostNameIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.portNumber = iprot.readI16();
-          struct.setPortNumberIsSet(true);
-        }
-      }
-    }
-
-    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
-      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
-    }
-  }
-
-  public static class deregisterBE_result implements org.apache.thrift.TBase<deregisterBE_result, deregisterBE_result._Fields>, java.io.Serializable, Cloneable, Comparable<deregisterBE_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("deregisterBE_result");
-
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.BOOL, (short)0);
-    private static final org.apache.thrift.protocol.TField E_FIELD_DESC = new org.apache.thrift.protocol.TField("e", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new deregisterBE_resultStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new deregisterBE_resultTupleSchemeFactory();
-
-    public boolean success; // required
-    public @org.apache.thrift.annotation.Nullable IllegalArgument e; // required
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success"),
-      E((short)1, "e");
-
-      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
-
-      static {
-        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      @org.apache.thrift.annotation.Nullable
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          case 1: // E
-            return E;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      @org.apache.thrift.annotation.Nullable
-      public static _Fields findByName(java.lang.String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final java.lang.String _fieldName;
-
-      _Fields(short thriftId, java.lang.String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public java.lang.String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    private static final int __SUCCESS_ISSET_ID = 0;
-    private byte __isset_bitfield = 0;
-    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
-      tmpMap.put(_Fields.E, new org.apache.thrift.meta_data.FieldMetaData("e", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, IllegalArgument.class)));
-      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(deregisterBE_result.class, metaDataMap);
-    }
-
-    public deregisterBE_result() {
-    }
-
-    public deregisterBE_result(
-      boolean success,
-      IllegalArgument e)
-    {
-      this();
-      this.success = success;
-      setSuccessIsSet(true);
-      this.e = e;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public deregisterBE_result(deregisterBE_result other) {
-      __isset_bitfield = other.__isset_bitfield;
-      this.success = other.success;
-      if (other.isSetE()) {
-        this.e = new IllegalArgument(other.e);
-      }
-    }
-
-    public deregisterBE_result deepCopy() {
-      return new deregisterBE_result(this);
-    }
-
-    @Override
-    public void clear() {
-      setSuccessIsSet(false);
-      this.success = false;
-      this.e = null;
-    }
-
-    public boolean isSuccess() {
-      return this.success;
-    }
-
-    public deregisterBE_result setSuccess(boolean success) {
-      this.success = success;
-      setSuccessIsSet(true);
-      return this;
-    }
-
-    public void unsetSuccess() {
-      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
-    }
-
-    /** Returns true if field success is set (has been assigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public IllegalArgument getE() {
-      return this.e;
-    }
-
-    public deregisterBE_result setE(@org.apache.thrift.annotation.Nullable IllegalArgument e) {
-      this.e = e;
-      return this;
-    }
-
-    public void unsetE() {
-      this.e = null;
-    }
-
-    /** Returns true if field e is set (has been assigned a value) and false otherwise */
-    public boolean isSetE() {
-      return this.e != null;
-    }
-
-    public void setEIsSet(boolean value) {
-      if (!value) {
-        this.e = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((java.lang.Boolean)value);
-        }
-        break;
-
-      case E:
-        if (value == null) {
-          unsetE();
-        } else {
-          setE((IllegalArgument)value);
-        }
-        break;
-
-      }
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public java.lang.Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return isSuccess();
-
-      case E:
-        return getE();
-
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new java.lang.IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      case E:
-        return isSetE();
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(java.lang.Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof deregisterBE_result)
-        return this.equals((deregisterBE_result)that);
-      return false;
-    }
-
-    public boolean equals(deregisterBE_result that) {
-      if (that == null)
-        return false;
-      if (this == that)
-        return true;
-
-      boolean this_present_success = true;
-      boolean that_present_success = true;
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (this.success != that.success)
-          return false;
-      }
-
-      boolean this_present_e = true && this.isSetE();
-      boolean that_present_e = true && that.isSetE();
-      if (this_present_e || that_present_e) {
-        if (!(this_present_e && that_present_e))
-          return false;
-        if (!this.e.equals(that.e))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      int hashCode = 1;
-
-      hashCode = hashCode * 8191 + ((success) ? 131071 : 524287);
-
-      hashCode = hashCode * 8191 + ((isSetE()) ? 131071 : 524287);
-      if (isSetE())
-        hashCode = hashCode * 8191 + e.hashCode();
-
-      return hashCode;
-    }
-
-    @Override
-    public int compareTo(deregisterBE_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-
-      lastComparison = java.lang.Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.valueOf(isSetE()).compareTo(other.isSetE());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetE()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.e, other.e);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      scheme(iprot).read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      scheme(oprot).write(oprot, this);
-      }
-
-    @Override
-    public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("deregisterBE_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      sb.append(this.success);
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("e:");
-      if (this.e == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.e);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
-      try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
-        __isset_bitfield = 0;
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class deregisterBE_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public deregisterBE_resultStandardScheme getScheme() {
-        return new deregisterBE_resultStandardScheme();
-      }
-    }
-
-    private static class deregisterBE_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<deregisterBE_result> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, deregisterBE_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
-                struct.success = iprot.readBool();
-                struct.setSuccessIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 1: // E
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.e = new IllegalArgument();
-                struct.e.read(iprot);
-                struct.setEIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, deregisterBE_result struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.isSetSuccess()) {
-          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          oprot.writeBool(struct.success);
-          oprot.writeFieldEnd();
-        }
-        if (struct.e != null) {
-          oprot.writeFieldBegin(E_FIELD_DESC);
-          struct.e.write(oprot);
-          oprot.writeFieldEnd();
-        }
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class deregisterBE_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public deregisterBE_resultTupleScheme getScheme() {
-        return new deregisterBE_resultTupleScheme();
-      }
-    }
-
-    private static class deregisterBE_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<deregisterBE_result> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, deregisterBE_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetSuccess()) {
-          optionals.set(0);
-        }
-        if (struct.isSetE()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
-        if (struct.isSetSuccess()) {
-          oprot.writeBool(struct.success);
-        }
-        if (struct.isSetE()) {
-          struct.e.write(oprot);
-        }
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, deregisterBE_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, heartBeat_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
